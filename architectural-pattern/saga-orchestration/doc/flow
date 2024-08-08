@@ -48,3 +48,5 @@ supplier-out-0:
 destination: order-created: Đặt tên của Kafka topic mà supplier sẽ gửi thông điệp tới. Ở đây, topic là order-created.
 consumer-in-0:
 destination: order-updated: Đặt tên của Kafka topic mà consumer sẽ lắng nghe. Ở đây, topic là order-updated.
+-------------
+orderProduct() thực hiện process nếu lỗi thì cùng revert
