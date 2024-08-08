@@ -1,0 +1,50 @@
+spring.cloud.stream:
+  function:
+    definition: processor
+  bindings:
+    processor-in-0:
+      destination: order-created
+    processor-out-0:
+      destination: order-updated
+  kafka:
+    binder:
+      replication-factor: 1
+spring.cloud.stream: Đây là phần gốc của cấu hình Spring Cloud Stream.
+
+function:
+
+definition: processor: Định nghĩa tên của function. Function này có thể là một Supplier, Function, hoặc Consumer trong ứng dụng Spring Cloud Stream. Trong trường hợp này, nó là một Function với tên là processor.
+bindings:
+
+processor-in-0: Định nghĩa input binding cho function processor.
+destination: order-created: Đặt tên của Kafka topic mà function sẽ lắng nghe. Ở đây, topic là order-created.
+processor-out-0: Định nghĩa output binding cho function processor.
+destination: order-updated: Đặt tên của Kafka topic mà function sẽ gửi thông điệp sau khi xử lý. Ở đây, topic là order-updated.
+kafka:
+
+binder:
+replication-factor: 1: Định nghĩa số lượng bản sao (replication factor) cho các topic Kafka được tạo ra. Ở đây, giá trị là 1, nghĩa là mỗi topic chỉ có một bản sao, không có redundancy. Điều này có thể không phù hợp trong môi trường production vì nếu broker bị lỗi, dữ liệu sẽ không được sao lưu.
+-----------
+server:
+  port: 8085
+spring.cloud.stream:
+  function:
+    definition: supplier;consumer
+  bindings:
+    supplier-out-0:
+      destination: order-created
+    consumer-in-0:
+      destination: order-updated
+---
+spring:
+  jpa:
+    defer-datasource-initialization: true
+spring.cloud.stream:
+
+function:
+definition: supplier;consumer: Định nghĩa hai function, supplier và consumer. Đây có thể là các Supplier, Function, hoặc Consumer trong ứng dụng Spring Cloud Stream. Dấu chấm phẩy (;) được sử dụng để phân tách các function.
+bindings:
+supplier-out-0:
+destination: order-created: Đặt tên của Kafka topic mà supplier sẽ gửi thông điệp tới. Ở đây, topic là order-created.
+consumer-in-0:
+destination: order-updated: Đặt tên của Kafka topic mà consumer sẽ lắng nghe. Ở đây, topic là order-updated.
